@@ -9,7 +9,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import debug from "debug";
 const d = debug("App");
-//debug.enable('*');
+debug.enable('*');
 const app: Application = express();
 app.use(fileUpload());
 app.use(helmet());
@@ -23,13 +23,12 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 /* The path to the images. */
 const input_path = "./public/assets/images";
-/* The path to the output image. */
-const output_path = "./public/assets/images/thumbnails";
+
 /* A route handler api. */
 app.use(api);
 
-/* A route handler. */
-app.get("/:slug?", (req, res) => {
+/* The Main route handler. */
+app.get("/:slug?", (req: Request, res: Response) => {
     const slug = req.params.slug;
     const imagePath = `${input_path}/*.*`;
     switch (slug) {
@@ -67,6 +66,8 @@ app.get("/resize/:file", (req: Request, res: Response) => {
             return res.render("resize", { title: "Resize", file: { basename: path.basename(files[0]), name: path.parse(files[0]).name } });
     });
 });
+
+/* A route handler for upload/edit image form route. */
 app.post("/images", (req: Request, res: Response) => {
     const validate = Joi.object({
         filename: Joi.string(),
@@ -100,7 +101,7 @@ app.post("/images", (req: Request, res: Response) => {
         d(err);
         return res.status(500).send({ status: false, message: err.message });
     });
-})
+});
 
 
 
