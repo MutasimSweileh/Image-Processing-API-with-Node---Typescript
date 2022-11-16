@@ -19,8 +19,8 @@ app.get("/api/images", (req, res) => {
     //console.log(postOrget);
     const validate = joi_1.default.object({
         filename: joi_1.default.string().required(),
-        width: joi_1.default.number().required(),
-        height: joi_1.default.number().required()
+        width: joi_1.default.number().min(5).required(),
+        height: joi_1.default.number().min(5).required()
     }).validate(bodyOrquery);
     if (validate.error) {
         return res.status(400).json({ success: false, message: validate.error.details[0].message });

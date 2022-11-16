@@ -4,10 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon src/app.ts",
-    "build": "tsc",
-    "start": "npm run build && nodemon public/app.js",
-    "test": "npm run build && jasmine"
+    "Dev": "nodemon src/app.ts",
+    "Build": "tsc",
+    "Start": "npm run build && nodemon public/app.js",
+    "Test": "npm run build && jasmine"
   },
   "author": "",
   "license": "ISC",
