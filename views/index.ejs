@@ -1,0 +1,27 @@
+<html lang="en">
+<%- include("./inc/head.ejs") %>
+
+  <body>
+    <%- include("./inc/nav.ejs") %>
+      <div class="content">
+        <h2>All Images</h2>
+
+        <% if (images.length> 0) { %>
+          <div class="cards">
+            <% images.forEach(image=> { %>
+              <a class="single" href="/resize/<%= image.name %>">
+                <img src="/images/<%= image.file %>" alt="<%= image.name %>"
+                  title="<%= image.name %>">
+              </a>
+              <% }) %>
+          </div>
+          <% } else { %>
+            <p>There are no images to display...</p>
+            <% } %>
+
+      </div>
+
+      <%- include("./inc/footer.ejs") %>
+  </body>
+
+</html>
