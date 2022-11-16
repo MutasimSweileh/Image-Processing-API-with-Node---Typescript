@@ -3,6 +3,7 @@ import Joi from "joi";
 import sharp from "sharp";
 import glob from "glob";
 import path from "path";
+import fs from "fs";
 const app = express.Router();
 const input_path = "./public/assets/images";
 /* The path to the output image. */
@@ -30,6 +31,9 @@ app.get("/api/images", (req: Request, res: Response) => {
         files.forEach(v => {
             const newFile = path.parse(v);
             const output = `${output_path}/${newFile.name}-${values.width}x${values.height + newFile.ext}`;
+            if (fs.existsSync(output)) {
+                return res.sendFile(output, { root: path.join(__dirname, "..", "..") });
+            }
             sharp(v)
                 .resize(values.width, values.height)
                 .toFile(output)

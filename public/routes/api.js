@@ -8,6 +8,7 @@ const joi_1 = __importDefault(require("joi"));
 const sharp_1 = __importDefault(require("sharp"));
 const glob_1 = __importDefault(require("glob"));
 const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 const app = express_1.default.Router();
 const input_path = "./public/assets/images";
 /* The path to the output image. */
@@ -37,6 +38,9 @@ app.get("/api/images", (req, res) => {
         files.forEach(v => {
             const newFile = path_1.default.parse(v);
             const output = `${output_path}/${newFile.name}-${values.width}x${values.height + newFile.ext}`;
+            if (fs_1.default.existsSync(output)) {
+                return res.sendFile(output, { root: path_1.default.join(__dirname, "..", "..") });
+            }
             (0, sharp_1.default)(v)
                 .resize(values.width, values.height)
                 .toFile(output)
