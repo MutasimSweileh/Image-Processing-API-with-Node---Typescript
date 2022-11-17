@@ -7,7 +7,10 @@
     "Dev": "node src/app.ts",
     "Build": "tsc",
     "Start": "npm run Build && node public/app.js",
-    "Test": "npm run Build && jasmine"
+    "Test": "npm run Build && jasmine",
+    "Format": "prettier --write src/**/*.ts",
+    "Lint": "eslint src/**/*.ts",
+    "Lint:fix": "eslint --fix"
   },
   "author": "",
   "license": "ISC",
@@ -35,6 +38,12 @@
     "@types/node": "^18.11.9",
     "@types/sharp": "^0.31.0",
     "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
     "typescript": "^4.9.3"
   }
 }
