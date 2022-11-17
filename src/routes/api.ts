@@ -1,56 +1,58 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, Router } from 'express';
+import { processImage, input_path, output_path } from '../image-processing'; // Image handling
 import Joi from 'joi';
-import sharp from 'sharp';
 import glob from 'glob';
 import path from 'path';
 import fs from 'fs';
-const app = express.Router();
-const input_path = './public/assets/images';
-/* The path to the output image. */
-const output_path = './public/assets/images/thumbnails';
-
-app.get('/api/images', (req: Request, res: Response) => {
+const app: Router = express.Router();
+app.get('/api/images', (req: Request, res: Response): void => {
   const bodyOrquery = req.query ?? req.body;
-  //console.log(postOrget);
   const validate = Joi.object({
     filename: Joi.string().required(),
     width: Joi.number().min(5).required(),
-    height: Joi.number().min(5).required(),
+    height: Joi.number().min(5).required()
   }).validate(bodyOrquery);
   if (validate.error) {
-    return res
-      .status(400)
-      .json({ success: false, message: validate.error.details[0].message });
+    res.status(400).json({ success: false, message: validate.error.details[0].message });
+    return;
   }
   const values = validate.value;
   const imagePath = `${input_path}/${values.filename}.*`;
   /* A function that is used to find all the files that match the pattern. */
-  glob(imagePath, (er: Error | null, files: string[]) => {
+  glob(imagePath, (er: Error | null, files: string[]): void => {
     if (er != null) {
       res.status(400).json({ success: false, message: er.message });
+      return;
     }
     if (files.length < 1) {
-      return res.status(404).json({ success: false, message: 'Input image not found!' });
+      res.status(404).json({ success: false, message: 'Input image not found!' });
+      return;
     }
-    files.forEach((v) => {
+    files.forEach(v => {
       const newFile = path.parse(v);
       const output = `${output_path}/${newFile.name}-${values.width}x${
         values.height + newFile.ext
       }`;
       if (fs.existsSync(output)) {
-        return res.sendFile(output, { root: path.join(__dirname, '..', '..') });
+        res.sendFile(output, { root: path.join(__dirname, '..', '..') });
+        return;
       }
-      sharp(v)
-        .resize(values.width, values.height)
-        .toFile(output)
-        .then(() => {
-          return res.sendFile(output, {
-            root: path.join(__dirname, '..', '..'),
+      processImage({
+        src: v,
+        target: output,
+        width: parseInt(values.width),
+        height: parseInt(values.height)
+      }).then(result => {
+        if (result.success) {
+          res.sendFile(output, {
+            root: path.join(__dirname, '..', '..')
           });
-        })
-        .catch((err: Error) => {
-          return res.status(400).json({ success: false, message: err.message });
-        });
+          return;
+        } else {
+          res.status(400).json({ success: false, message: result.message });
+          return;
+        }
+      });
     });
   });
 });
