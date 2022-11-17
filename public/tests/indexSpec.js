@@ -27,19 +27,19 @@ describe('Test endpoint response', () => {
     it('gets the endpoint resize page and expect error', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get('/resize/icelandwaterfall2');
         expect(response.status).toBe(404);
-        expect(response.body.message).toContain("Input image not found");
+        expect(response.body.message).toContain('Input image not found');
     }));
 });
 describe('Image resize api function should resolve or reject', () => {
     it('Expect specific Error from the endpoint', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get('/api/images/');
         expect(response.status).toBe(400);
-        expect(response.body.message).toContain("required");
+        expect(response.body.message).toContain('required');
     }));
     it('Expect success response from the endpoint with output image', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get('/api/images/?filename=icelandwaterfall&width=200&height=200');
         //console.log(response);
         expect(response.status).toBe(200);
-        expect(response.type).toContain("image");
+        expect(response.type).toContain('image');
     }));
 });
