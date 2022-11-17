@@ -6,8 +6,8 @@
   "scripts": {
     "Dev": "nodemon src/app.ts",
     "Build": "tsc",
-    "Start": "npm run build && nodemon public/app.js",
-    "Test": "npm run build && jasmine"
+    "Start": "npm run Build && nodemon public/app.js",
+    "Test": "npm run Build && jasmine"
   },
   "author": "",
   "license": "ISC",
