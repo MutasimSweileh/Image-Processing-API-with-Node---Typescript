@@ -1,8 +1,7 @@
 ### Scripts
-- Dev: ```nodemon src/app.ts```
 - Build: ```tsc```
-- Start: ```pm run build && nodemon public/app.js```
-- Test: ```npm run build && jasmine```
+- Start: ```pm run Build && node public/app.js```
+- Test: ```npm run Build && jasmine```
 
 ### Usage
 The server will listen on port 3000 If no `PORT` variable is found in the work environment:

@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "Dev": "nodemon src/app.ts",
+    "Dev": "node src/app.ts",
     "Build": "tsc",
-    "Start": "npm run Build && nodemon public/app.js",
+    "Start": "npm run Build && node public/app.js",
     "Test": "npm run Build && jasmine"
   },
   "author": "",
