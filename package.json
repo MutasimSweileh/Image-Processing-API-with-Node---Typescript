@@ -6,7 +6,7 @@
   "scripts": {
     "Dev": "node src/app.ts",
     "Build": "tsc",
-    "Start": "npm run Build && node public/app.js",
+    "start": "npm run Build && node public/app.js",
     "Test": "npm run Build && jasmine",
     "Format": "prettier --write src/**/*.ts",
     "Lint": "eslint src/**/*.ts",
