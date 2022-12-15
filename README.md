@@ -1,11 +1,11 @@
 ### Scripts
 
-- Build: `tsc`
-- Start: `npm run Build && node public/app.js`
-- Test: `npm run Build && jasmine`
-- Format: `prettier --write src/**/*.ts`
-- Lint: `eslint src/**/*.ts`
-- Lint:fix: `eslint --fix"`
+- build: `tsc`
+- start: `npm run build && node public/app.js`
+- test: `npm run build && jasmine`
+- format: `prettier --write src/**/*.ts`
+- lint: `eslint src/**/*.ts`
+- lint:fix: `eslint --fix"`
 
 ### Usage
 

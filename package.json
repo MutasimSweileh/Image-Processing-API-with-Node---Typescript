@@ -4,13 +4,13 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "Dev": "node src/app.ts",
-    "Build": "tsc",
+    "dev": "node src/app.ts",
+    "build": "tsc",
     "start": "npm run Build && node public/app.js",
-    "Test": "npm run Build && jasmine",
-    "Format": "prettier --write src/**/*.ts",
-    "Lint": "eslint src/**/*.ts",
-    "Lint:fix": "eslint --fix"
+    "test": "npm run Build && jasmine",
+    "format": "prettier --write src/**/*.ts",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint --fix"
   },
   "author": "",
   "license": "ISC",
