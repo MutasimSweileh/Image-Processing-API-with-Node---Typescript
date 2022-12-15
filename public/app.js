@@ -42,7 +42,8 @@ app.get('/:slug?', (req, res) => {
                     const file = path_1.default.parse(v);
                     images.push({ name: file.name, file: file.base });
                 });
-                return res.render('index', { title: 'Home', images });
+                res.render('index', { title: 'Home', images });
+                return;
             });
             break;
         case 'about':
@@ -56,24 +57,29 @@ app.get('/:slug?', (req, res) => {
             break;
     }
 });
+const fullImagePath = path_1.default.join(__dirname, `/assets/images/test.jpg`);
+console.log(fullImagePath);
 app.get('/resize/:file', (req, res) => {
     const file = req.params.file;
     const imagePath = `${input_path}/${file}.*`;
     (0, glob_1.default)(imagePath, (er, files) => {
         if (er != null) {
             res.status(400).json({ success: false, message: er.message });
+            return;
         }
         if (files.length < 1) {
-            return res.status(404).json({ success: false, message: 'Input image not found!' });
+            res.status(404).json({ success: false, message: 'Input image not found!' });
+            return;
         }
         else
-            return res.render('resize', {
+            res.render('resize', {
                 title: 'Resize',
                 file: {
                     basename: path_1.default.basename(files[0]),
-                    name: path_1.default.parse(files[0]).name,
-                },
+                    name: path_1.default.parse(files[0]).name
+                }
             });
+        return;
     });
 });
 /* A route handler for upload/edit image form route. */
@@ -81,7 +87,7 @@ app.post('/images', (req, res) => {
     const validate = joi_1.default.object({
         filename: joi_1.default.string(),
         width: joi_1.default.number().required(),
-        height: joi_1.default.number().required(),
+        height: joi_1.default.number().required()
     }).validate(req.body);
     if (validate.error) {
         return res
@@ -98,22 +104,22 @@ app.post('/images', (req, res) => {
         }
         else if (req.files !== null) {
             const file = (_a = req.files) === null || _a === void 0 ? void 0 : _a.file;
-            file.mv(`${input_path}/${file.name}`, (err) => {
+            file.mv(`${input_path}/${file.name}`, err => {
                 if (err)
                     reject(err);
                 resolve(path_1.default.parse(file.name).name);
             });
         }
     })
-        .then((result) => {
+        .then(result => {
         const query = querystring_1.default.stringify({
             filename: result,
             width: req.body.width,
-            height: req.body.height,
+            height: req.body.height
         });
         return res.redirect('/api/images?' + query);
     })
-        .catch((err) => {
+        .catch(err => {
         d(err);
         return res.status(500).send({ status: false, message: err.message });
     });

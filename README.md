@@ -1,7 +1,7 @@
 ### Scripts
 
 - Build: `tsc`
-- Start: `pm run Build && node public/app.js`
+- Start: `npm run Build && node public/app.js`
 - Test: `npm run Build && jasmine`
 - Format: `prettier --write src/**/*.ts`
 - Lint: `eslint src/**/*.ts`

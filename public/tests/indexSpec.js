@@ -51,7 +51,7 @@ describe('Image resize api endpoint tests', () => {
         expect(response.type).toContain('image');
     }));
 });
-describe('Image resize api function tests', () => {
+describe('Image resize function tests', () => {
     it('image processing function (invalid args)', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield (0, image_processing_1.processImage)({
             src: '',
